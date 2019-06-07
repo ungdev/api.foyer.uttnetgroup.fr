@@ -1,6 +1,7 @@
 const errorHandler = require('../../utils/errorHandler')
 const isAuth = require('../../middlewares/isAuth')
 const axios = require('axios')
+const pick = require('lodash.pick')
 
 module.exports = app => {
   app.get('/assos-all', [isAuth('assos-all')])
@@ -46,7 +47,7 @@ module.exports = app => {
           descriptionShort: asso.descriptionShort
         }
       })
-      const allasso = assos.concat(assos2).concat(assos3)
+      let allasso = assos.concat(assos2).concat(assos3)
       const orgas = await Orga.findAll()
       if (allasso.length !== orgas.length) {
         await Promise.all(
@@ -58,6 +59,12 @@ module.exports = app => {
           })
         )
       }
+      allasso = allasso.map(asso => {
+        return {
+          ...pick(orgas.find(orga => orga.login === asso.login), ['id']),
+          ...asso
+        }
+      })
       return res
         .status(200)
         .json(allasso)

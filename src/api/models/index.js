@@ -16,6 +16,9 @@ module.exports = function(sequelize) {
   User.belongsToMany(Perm, { through: UserPerm, as: 'Perms' })
   Perm.belongsToMany(User, { through: UserPerm, as: 'Members' })
 
+  Orga.belongsTo(Perm)
+  Perm.hasMany(Orga)
+
   return {
     Orga,
     Permission,

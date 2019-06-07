@@ -5,6 +5,7 @@ const axios = require('axios')
 module.exports = app => {
   app.get('/assos-all', [isAuth('assos-all')])
   app.get('/assos-all', async (req, res) => {
+    const { Orga } = app.locals.models
     try {
       const result = await axios.get(
         `${process.env.ETU_BASEURL}/api/public/orgas`,
@@ -43,6 +44,15 @@ module.exports = app => {
         }
       })
       const allasso = assos.concat(assos2).concat(assos3)
+      const orgas = await Orga.findAll()
+      if(allasso.length !== orgas.length) {
+        allasso.forEach(async asso => {
+          let orga = orgas.find(o => o.login === asso.login)
+          if(!orga) {
+            await Orga.create(asso)
+          }
+        });
+      }
       return res
         .status(200)
         .json(allasso)

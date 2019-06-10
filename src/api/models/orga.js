@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     login: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    diapoImage: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   })
 }

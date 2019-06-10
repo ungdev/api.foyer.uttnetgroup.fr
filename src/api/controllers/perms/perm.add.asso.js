@@ -19,7 +19,7 @@ module.exports = app => {
     const { Perm, Orga } = app.locals.models
     try {
       const { login } = req.body
-      const perm = await Perm.findByPk(req.params.id)
+      const perm = await Perm.findByPk(req.params.id, { include: [Orga] })
       let asso = await Orga.findOne({ where: { login } })
       if (!asso) {
         const result = await axios.get(

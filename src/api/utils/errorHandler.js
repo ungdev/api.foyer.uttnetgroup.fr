@@ -13,7 +13,7 @@ module.exports = (err, res) => {
       .json({ error: 'NOT_FOUND' })
       .end()
   }
-  if (err.response.status === 403) {
+  if (err.response && err.response.status === 403) {
     return res
       .status(404)
       .json({ error: err.response.data.error })

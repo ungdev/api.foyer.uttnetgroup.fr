@@ -43,7 +43,7 @@ module.exports = app => {
           headers: { Authorization: `Bearer ${accessToken.token.access_token}` }
         }
       )
-      const { studentId, fullName } = res.data.data
+      const { studentId, fullName, login } = res.data.data
       // Try to find the user
       let user = await User.findOne({
         where: {
@@ -63,6 +63,7 @@ module.exports = app => {
         user = await User.create({
           full_name: fullName,
           student_id: studentId,
+          login: login,
           access_token: accessToken.token.access_token,
           refresh_token: accessToken.token.refresh_token,
           token_expires: accessToken.token.expires

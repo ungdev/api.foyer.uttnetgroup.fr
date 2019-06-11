@@ -9,9 +9,8 @@ const twitter = require('./twitter')
 module.exports = async function(app, express) {
   const { sequelize, models } = await database()
 
-
   const server = http.Server(app)
-  const io = socketio(server)
+  const io = socketio(server, {path: '/api/socket.io'})
 
   main(app, io)
   app.locals.app = app

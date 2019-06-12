@@ -3,8 +3,9 @@ const database = require('./database')
 const main = require('./main')
 const socketio = require('socket.io')
 const env = require('../src/env')
-const debug = require('debug')('api.gala.uttnetgroup.fr:bin')
+const log = require('./api/utils/log')(module)
 const twitter = require('./twitter')
+const schedule = require('./schedule')
 
 module.exports = async function(app, express) {
   const { sequelize, models } = await database()
@@ -24,8 +25,9 @@ module.exports = async function(app, express) {
   }
 
   server.listen(env.API_PORT, () =>
-    debug(`server started on port ${env.API_PORT} [${env.NODE_ENV}]`)
+    log.info(`Server started on port ${env.API_PORT} [${env.NODE_ENV}]`)
   )
   twitter(app)
+  schedule(app)
   return app
 }

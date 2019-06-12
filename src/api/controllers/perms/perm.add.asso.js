@@ -3,6 +3,7 @@ const isAuth = require('../../middlewares/isAuth')
 const isAdmin = require('../../middlewares/isAdmin')
 const { check } = require('express-validator/check')
 const validateBody = require('../../middlewares/validateBody')
+const updateDiapo = require('../../utils/updateDiapo')
 
 module.exports = app => {
   app.post('/perms/:id/assos', [
@@ -33,7 +34,8 @@ module.exports = app => {
           name: result.data.data.name
         })
       }
-      perm.addOrga(asso)
+      await perm.addOrga(asso)
+      updateDiapo(app)
       return res
         .status(200)
         .json(perm)

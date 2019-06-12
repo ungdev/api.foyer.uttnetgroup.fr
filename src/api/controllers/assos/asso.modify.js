@@ -5,6 +5,7 @@ const { check } = require('express-validator/check')
 const validateBody = require('../../middlewares/validateBody')
 const path = require('path')
 const fs = require('fs')
+const updateDiapo = require('../../utils/updateDiapo')
 
 module.exports = app => {
   app.put('/assos/:id', [
@@ -29,12 +30,15 @@ module.exports = app => {
       }
       if (req.body.diapoImage === '') {
         const files = fs.readdirSync(path.join(__dirname, '../../../../images'))
-        let file = files.find(f => f.indexOf(orga.diapoImage.split('/images/')[1]) !== -1)
+        let file = files.find(
+          f => f.indexOf(orga.diapoImage.split('/images/')[1]) !== -1
+        )
         const oldfile = path.join(__dirname, '../../../../images', file)
         fs.unlinkSync(oldfile)
         orga.diapoImage = null
       }
       await orga.save()
+      updateDiapo(app)
       return res
         .status(200)
         .json(orga)

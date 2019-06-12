@@ -1,5 +1,4 @@
 const Twitter = require('twitter')
-const removeAccents = require('remove-accents')
 
 module.exports = app => {
   const { Tweet } = app.locals.models

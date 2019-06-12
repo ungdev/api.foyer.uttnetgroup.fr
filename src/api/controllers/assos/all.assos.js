@@ -2,7 +2,7 @@ const errorHandler = require('../../utils/errorHandler')
 const isAuth = require('../../middlewares/isAuth')
 const axios = require('axios')
 const pick = require('lodash.pick')
-const log = require('../../utils/log')
+const log = require('../../utils/log')(module)
 
 mapParams = asso => pick(asso, ['login', 'name', 'descriptionShort'])
 

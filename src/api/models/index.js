@@ -6,6 +6,7 @@ module.exports = function(sequelize) {
   const User = sequelize.import(`${__dirname}/user`)
   const UserOrga = sequelize.import(`${__dirname}/userOrga`)
   const UserPerm = sequelize.import(`${__dirname}/userPerm`)
+  const Parameter = sequelize.import(`${__dirname}/parameter`)
 
   Permission.belongsTo(User)
   User.hasMany(Permission)
@@ -26,6 +27,7 @@ module.exports = function(sequelize) {
     Tweet,
     User,
     UserOrga,
-    UserPerm
+    UserPerm,
+    Parameter
   }
 }

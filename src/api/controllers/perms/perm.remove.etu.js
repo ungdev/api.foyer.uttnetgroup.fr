@@ -16,7 +16,7 @@ module.exports = app => {
       if (!perm || !etu)
         return res
           .status(404)
-          .json('NOT_FOUND')
+          .json({ error: 'NOT_FOUND' })
           .end()
       perm.removeMembers(etu)
       return res

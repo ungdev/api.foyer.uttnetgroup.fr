@@ -16,7 +16,7 @@ module.exports = app => {
       if (!asso) {
         return res
           .status(404)
-          .json('NOT_FOUND')
+          .json({error: 'NOT_FOUND'})
           .end()
       }
       asso.permId = null

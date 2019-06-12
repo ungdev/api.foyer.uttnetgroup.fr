@@ -39,7 +39,8 @@ module.exports = app => {
               image: data._links.find(l => l.rel === 'orga.image').uri,
               mail: data.mail,
               decription: data.description,
-              decriptionShort: data.decriptionShort
+              decriptionShort: data.decriptionShort,
+              members: formatMembers(data._embed.members)
             }
           } catch (e) {
             console.log('FAILED', asso.login, e)
@@ -55,5 +56,14 @@ module.exports = app => {
     } catch (err) {
       errorHandler(err, res)
     }
+  })
+}
+
+formatMembers = members => {
+  return members.map(member => {
+    const { user } = member._embed
+    delete user._embed
+    delete user._links
+    return { ...user, group: member.group.name, role: member.role }
   })
 }

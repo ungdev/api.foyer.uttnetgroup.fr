@@ -14,10 +14,24 @@ module.exports = app => {
   ])
   app.post('/perms/:id/etus', [isAuth('perm-add-etu'), isAdmin('perm-add-etu')])
   app.post('/perms/:id/etus', async (req, res) => {
-    const { Perm, User } = app.locals.models
+    const { Perm, User, Orga, UserPerm } = app.locals.models
     try {
       const { login } = req.body
-      const perm = await Perm.findByPk(req.params.id)
+      const perm = await Perm.findByPk(req.params.id, {
+        include: [Orga, { model: User, through: UserPerm, as: 'Members' }]
+      })
+      if (perm.orgas.length > 0) {
+        return res
+          .status(400)
+          .json({ error: 'HAS_ORGAS' })
+          .end()
+      }
+      if (perm.Members.find(etu => etu.login === login)) {
+        return res
+          .status(400)
+          .json({ error: 'USER_ALREADY_IN_PERM' })
+          .end()
+      }
       let etu = await User.findOne({ where: { login } })
       if (!etu) {
         const result = await axios.get(

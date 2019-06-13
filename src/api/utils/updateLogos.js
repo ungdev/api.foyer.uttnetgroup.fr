@@ -24,15 +24,33 @@ module.exports = async app => {
         .filter(orga => orga.displayImage)
         .map(orga => orga.image)
       const foyer = await Orga.findOne({ where: { login: 'foyer' } })
-      io.emit('logos', [...logos, foyer && foyer.image])
+      io.emit('logos', [foyer && foyer.image, ...logos])
     } else {
       const foyer = await Orga.findOne({ where: { login: 'foyer' } })
-      if (foyer) io.emit('logos', [foyer.image])
+      const assos = await Orga.findAll()
+      if (foyer)
+        io.emit('logos', [
+          foyer.image,
+          ...assos
+            .filter(asso => asso.login !== 'foyer')
+            .filter(orga => orga.image !== '/uploads/logos/default-logo.png')
+            .filter(orga => orga.displayImage)
+            .map(asso => asso.image)
+        ])
     }
   } else {
     // there's no perm now
     const foyer = await Orga.findOne({ where: { login: 'foyer' } })
-    if (foyer) io.emit('logos', [foyer.image])
+    const assos = await Orga.findAll()
+    if (foyer)
+      io.emit('logos', [
+        foyer.image,
+        ...assos
+          .filter(asso => asso.login !== 'foyer')
+          .filter(orga => orga.image !== '/uploads/logos/default-logo.png')
+          .filter(orga => orga.displayImage)
+          .map(asso => asso.image)
+      ])
   }
 }
 

@@ -2,6 +2,7 @@ const errorHandler = require('../../utils/errorHandler')
 const isAuth = require('../../middlewares/isAuth')
 const isAdmin = require('../../middlewares/isAdmin')
 const updateDiapo = require('../../utils/updateDiapo')
+const updateLogos = require('../../utils/updateLogos')
 
 module.exports = app => {
   app.delete('/assos/:login/perm', [
@@ -22,6 +23,7 @@ module.exports = app => {
       asso.permId = null
       await asso.save()
       updateDiapo(app)
+      updateLogos(app)
       return res
         .status(200)
         .json('OK')

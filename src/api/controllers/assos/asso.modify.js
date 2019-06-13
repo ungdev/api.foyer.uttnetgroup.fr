@@ -6,6 +6,7 @@ const validateBody = require('../../middlewares/validateBody')
 const path = require('path')
 const fs = require('fs')
 const updateDiapo = require('../../utils/updateDiapo')
+const updateLogos = require('../../utils/updateLogos')
 
 module.exports = app => {
   app.put('/assos/:id', [
@@ -45,6 +46,7 @@ module.exports = app => {
       }
       await orga.save()
       updateDiapo(app)
+      updateLogos(app)
       return res
         .status(200)
         .json(orga)

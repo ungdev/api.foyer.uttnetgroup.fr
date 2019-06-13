@@ -16,6 +16,14 @@ module.exports = (sequelize, DataTypes) => {
     diapoImage: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    displayImage: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
     }
   })
 }

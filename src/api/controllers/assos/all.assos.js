@@ -4,8 +4,6 @@ const axios = require('axios')
 const pick = require('lodash.pick')
 const log = require('../../utils/log')(module)
 
-mapParams = asso => pick(asso, ['login', 'name', 'descriptionShort'])
-
 module.exports = app => {
   app.get('/assos-all', [isAuth('assos-all')])
   app.get('/assos-all', async (req, res) => {
@@ -17,21 +15,42 @@ module.exports = app => {
           headers: { Authorization: `Bearer ${req.user.access_token}` }
         }
       )
-      const assos = result.data.data.map(mapParams)
+      const assos = result.data.data.map(asso => {
+        return {
+          login: asso.login,
+          name: asso.name,
+          descriptionShort: asso.descriptionShort,
+          image: asso._links.find(link => link.rel === 'orga.image').uri
+        }
+      })
       const result2 = await axios.get(
         `${process.env.ETU_BASEURL}/api/public/orgas?page=2`,
         {
           headers: { Authorization: `Bearer ${req.user.access_token}` }
         }
       )
-      const assos2 = result2.data.data.map(mapParams)
+      const assos2 = result2.data.data.map(asso => {
+        return {
+          login: asso.login,
+          name: asso.name,
+          descriptionShort: asso.descriptionShort,
+          image: asso._links.find(link => link.rel === 'orga.image').uri
+        }
+      })
       const result3 = await axios.get(
         `${process.env.ETU_BASEURL}/api/public/orgas?page=3`,
         {
           headers: { Authorization: `Bearer ${req.user.access_token}` }
         }
       )
-      const assos3 = result3.data.data.map(mapParams)
+      const assos3 = result3.data.data.map(asso => {
+        return {
+          login: asso.login,
+          name: asso.name,
+          descriptionShort: asso.descriptionShort,
+          image: asso._links.find(link => link.rel === 'orga.image').uri
+        }
+      })
       let allasso = assos.concat(assos2).concat(assos3)
       const orgas = await Orga.findAll()
       if (allasso.length !== orgas.length) {
@@ -47,7 +66,10 @@ module.exports = app => {
       }
       allasso = allasso.map(asso => {
         return {
-          ...pick(orgas.find(orga => orga.login === asso.login), ['id', 'diapoImage']),
+          ...pick(orgas.find(orga => orga.login === asso.login), [
+            'id',
+            'diapoImage'
+          ]),
           ...asso
         }
       })

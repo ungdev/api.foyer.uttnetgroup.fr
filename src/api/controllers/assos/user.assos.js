@@ -38,8 +38,8 @@ module.exports = app => {
               phone: data.phone,
               image: data._links.find(l => l.rel === 'orga.image').uri,
               mail: data.mail,
-              decription: data.description,
-              decriptionShort: data.decriptionShort,
+              description: data.description,
+              descriptionShort: data.descriptionShort,
               members: formatMembers(data._embed.members)
             }
           } catch (e) {

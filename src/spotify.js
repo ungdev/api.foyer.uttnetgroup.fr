@@ -5,7 +5,7 @@ var https = require('https')
 var querystring = require('querystring')
 
 module.exports = app => {
-  setInterval(() => fetchSpotify(app), 5000)
+  setInterval(() => fetchSpotify(app), process.env.SPOTIFY_REFRESH_SPEED || 5000)
 }
 
 const fetchSpotify = async app => {

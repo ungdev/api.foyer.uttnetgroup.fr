@@ -2,8 +2,8 @@ const { check } = require('express-validator/check')
 const validateBody = require('../../middlewares/validateBody')
 const errorHandler = require('../../utils/errorHandler')
 const btoa = require('btoa')
-var https = require('https')
-var querystring = require('querystring')
+const https = require('https')
+const querystring = require('querystring')
 
 module.exports = app => {
   app.get('/spotify/redirect', [
@@ -59,7 +59,7 @@ module.exports = app => {
         querystring.stringify({
           grant_type: 'authorization_code',
           code: req.query.code,
-          redirect_uri: 'http://localhost:3000/api/v1/spotify/redirect/',
+          redirect_uri: process.env.API_HOST + '/api/v1/spotify/redirect/',
           client_id: process.env.SPOTIFY_ID,
           client_secret: process.env.SPOTIFY_SECRET
         })

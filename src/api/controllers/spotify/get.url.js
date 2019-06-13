@@ -12,7 +12,7 @@ module.exports = app => {
         '&scope=' +
         encodeURIComponent(scopes) +
         '&redirect_uri=' +
-        encodeURIComponent('http://localhost:3000/api/v1/spotify/redirect/')
+        encodeURIComponent(process.env.API_HOST + '/api/v1/spotify/redirect/')
       console.log('LINK', link)
       return res.redirect(link)
     } catch (err) {

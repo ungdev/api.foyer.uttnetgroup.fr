@@ -1,5 +1,4 @@
 const { check } = require('express-validator/check')
-const axios = require('axios')
 const validateBody = require('../../middlewares/validateBody')
 const errorHandler = require('../../utils/errorHandler')
 const btoa = require('btoa')
@@ -17,9 +16,8 @@ module.exports = app => {
     const { Parameter } = app.locals.models
     try {
       if (req.params.error) {
-        return res.redirect(
-          `${process.env.LOGIN_REDIRECT_URL}/spotify/error/${req.query.error}`
-        )
+        console.log('SPOTIFY ERROR :', req.params.error)
+        return res.redirect(`${process.env.LOGIN_REDIRECT_URL}/spotify/error`)
       }
 
       const request = https.request(
@@ -47,19 +45,15 @@ module.exports = app => {
           })
           r.on('error', function(err) {
             console.log(err)
-            return res
-              .status(400)
-              .json(err)
-              .end()
+            return res.redirect(
+              `${process.env.LOGIN_REDIRECT_URL}/spotify/error`
+            )
           })
         }
       )
       request.on('error', function(err) {
         console.log(err)
-        return res
-          .status(400)
-          .json(err)
-          .end()
+        return res.redirect(`${process.env.LOGIN_REDIRECT_URL}/spotify/error`)
       })
       request.write(
         querystring.stringify({
@@ -91,7 +85,10 @@ const setParameters = async (accessToken, refreshToken, Parameter) => {
     where: { key: 'spotify_refresh_token' }
   })
   if (!refresh_token)
-    await Parameter.create({ key: 'spotify_refresh_token', value: refreshToken })
+    await Parameter.create({
+      key: 'spotify_refresh_token',
+      value: refreshToken
+    })
   else {
     refresh_token.value = refreshToken
     await refresh_token.save()

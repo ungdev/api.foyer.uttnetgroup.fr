@@ -6,6 +6,7 @@ const env = require('../src/env')
 const log = require('./api/utils/log')(module)
 const twitter = require('./twitter')
 const schedule = require('./schedule')
+const spotify = require('./spotify')
 
 module.exports = async function(app, express) {
   const { sequelize, models } = await database()
@@ -29,5 +30,6 @@ module.exports = async function(app, express) {
   )
   twitter(app)
   schedule(app)
+  spotify(app)
   return app
 }

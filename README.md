@@ -28,7 +28,7 @@ yarn
 
 ```
 # create the databse 'foyer'
-CREATE DATABASE gala;
+CREATE DATABASE foyer;
 ```
 
 ## Configuration

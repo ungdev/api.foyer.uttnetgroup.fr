@@ -10,6 +10,7 @@ module.exports = app => {
         .json(
           orgas
             .filter(orga => orga.image !== '/uploads/logos/default-logo.png')
+            .filter(orga => orga.displayImage)
             .map(orga => orga.image)
         )
         .end()

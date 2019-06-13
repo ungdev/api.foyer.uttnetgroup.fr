@@ -68,7 +68,8 @@ module.exports = app => {
         return {
           ...pick(orgas.find(orga => orga.login === asso.login), [
             'id',
-            'diapoImage'
+            'diapoImage',
+            'displayImage'
           ]),
           ...asso
         }

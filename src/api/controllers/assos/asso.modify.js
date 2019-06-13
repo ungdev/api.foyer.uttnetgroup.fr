@@ -12,6 +12,9 @@ module.exports = app => {
     check('diapoImage')
       .optional()
       .isString(),
+    check('displayImage')
+      .optional()
+      .isBoolean(),
     validateBody()
   ])
   app.put('/assos/:id', [isAuth('edit-asso'), isAdmin('edit-asso')])
@@ -36,6 +39,9 @@ module.exports = app => {
         const oldfile = path.join(__dirname, '../../../../images', file)
         fs.unlinkSync(oldfile)
         orga.diapoImage = null
+      }
+      if (req.body.displayImage !== undefined) {
+        orga.displayImage = req.body.displayImage
       }
       await orga.save()
       updateDiapo(app)

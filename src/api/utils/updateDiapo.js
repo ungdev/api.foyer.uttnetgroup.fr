@@ -3,9 +3,15 @@ const getDefaultDiapo = require('./getDefaultDiapo')
 
 module.exports = async app => {
   const { io, models } = app.locals
-  const { Orga, Perm } = models
+  const { Orga, Perm, Affichage, AffichagePerm } = models
   const day = getDay()
-  const dayPerms = await Perm.findAll({ where: { day }, include: [Orga] })
+  const dayPerms = await Perm.findAll({
+    where: { day },
+    include: [
+      Orga,
+      { model: Affichage, through: AffichagePerm, as: 'affichages' }
+    ]
+  })
   const perms = dayPerms
     .filter(perm => {
       //filter all perms that starts in the future
@@ -20,7 +26,14 @@ module.exports = async app => {
   if (perms.length > 0) {
     // there's a perm now
     const perm = perms[0] // if there's more than one perm, it's a bug
-    if (perm.orgas.length > 0) {
+    if (perm.affichages && perm.affichages.length > 0) {
+      const images = perm.affichages.map(affichage =>
+        affichage.image
+          ? affichage.image
+          : { title: affichage.title, text: affichage.text }
+      )
+      io.emit('diapoImages', images)
+    } else if (perm.orgas.length > 0) {
       const diapos = perm.orgas
         .filter(orga => orga.diapoImage)
         .map(orga => orga.diapoImage)

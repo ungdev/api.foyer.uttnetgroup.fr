@@ -18,7 +18,7 @@ module.exports = app => {
     try {
       const { login } = req.body
       const perm = await Perm.findByPk(req.params.id, {
-        include: [Orga, { model: User, through: UserPerm, as: 'Members' }]
+        include: [Orga, { model: User, through: UserPerm, as: 'members' }]
       })
       if (perm.orgas.length > 0) {
         return res
@@ -26,7 +26,7 @@ module.exports = app => {
           .json({ error: 'HAS_ORGAS' })
           .end()
       }
-      if (perm.Members.find(etu => etu.login === login)) {
+      if (perm.members.find(etu => etu.login === login)) {
         return res
           .status(400)
           .json({ error: 'USER_ALREADY_IN_PERM' })

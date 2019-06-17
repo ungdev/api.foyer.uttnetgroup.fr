@@ -22,9 +22,9 @@ module.exports = app => {
     try {
       const { login } = req.body
       const perm = await Perm.findByPk(req.params.id, {
-        include: [Orga, { model: User, through: UserPerm, as: 'Members' }]
+        include: [Orga, { model: User, through: UserPerm, as: 'members' }]
       })
-      if (perm.Members.length > 0) {
+      if (perm.members.length > 0) {
         return res
           .status(400)
           .json({ error: 'HAS_MEMBERS' })

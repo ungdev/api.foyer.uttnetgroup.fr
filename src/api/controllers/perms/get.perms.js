@@ -8,7 +8,7 @@ module.exports = app => {
     const { Perm, Orga, User, UserPerm } = app.locals.models
     try {
       const perms = await Perm.findAll({
-        include: [Orga, { model: User, through: UserPerm, as: 'Members' }]
+        include: [Orga, { model: User, through: UserPerm, as: 'members' }]
       })
       return res
         .status(200)

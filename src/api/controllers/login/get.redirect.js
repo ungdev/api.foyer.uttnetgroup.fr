@@ -43,7 +43,7 @@ module.exports = app => {
           headers: { Authorization: `Bearer ${accessToken.token.access_token}` }
         }
       )
-      const { studentId, fullName, login } = res.data.data
+      const { studentId, fullName, login, _links } = res.data.data
       // Try to find the user
       let user = await User.findOne({
         where: {
@@ -66,7 +66,8 @@ module.exports = app => {
           login: login,
           access_token: accessToken.token.access_token,
           refresh_token: accessToken.token.refresh_token,
-          token_expires: accessToken.token.expires
+          token_expires: accessToken.token.expires,
+          image: _links.find(link => link.rel === 'user.image').uri
         })
       }
       token = jwt.sign({ id: user.id }, process.env.API_SECRET, {

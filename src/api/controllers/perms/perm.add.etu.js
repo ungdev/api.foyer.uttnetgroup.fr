@@ -44,7 +44,8 @@ module.exports = app => {
         etu = await User.create({
           login,
           full_name: user.fullName,
-          student_id: user.studentId
+          student_id: user.studentId,
+          image: user._links.find(link => link.rel === 'user.image').uri
         })
       }
       perm.addMembers(etu)

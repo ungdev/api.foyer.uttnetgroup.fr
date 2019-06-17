@@ -26,6 +26,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     token_expires: {
       type: DataTypes.STRING
+    },
+    image: {
+      type: DataTypes.STRING
     }
   })
 }

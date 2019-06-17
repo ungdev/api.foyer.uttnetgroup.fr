@@ -23,7 +23,7 @@ module.exports = app => {
         .json(users)
         .end()
     } catch (err) {
-      errorHandler(err, res)
+      errorHandler(err, req, res)
     }
   })
 }

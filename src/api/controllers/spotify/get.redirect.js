@@ -66,7 +66,7 @@ module.exports = app => {
       )
       request.end()
     } catch (err) {
-      errorHandler(err, res)
+      errorHandler(err, req, res)
     }
   })
 }

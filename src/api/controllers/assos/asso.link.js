@@ -10,7 +10,7 @@ module.exports = app => {
           process.env.ETU_BASEURL + '/orgas/' + orga.login
         )
     } catch (err) {
-      errorHandler(err, res)
+      errorHandler(err, req, res)
     }
   })
 }

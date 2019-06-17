@@ -57,7 +57,7 @@ module.exports = app => {
         .json(perm)
         .end()
     } catch (err) {
-      errorHandler(err, res)
+      errorHandler(err, req, res)
     }
   })
 }

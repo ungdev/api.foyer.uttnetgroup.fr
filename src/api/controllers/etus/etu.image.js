@@ -7,7 +7,7 @@ module.exports = app => {
       const user = await User.findByPk(req.params.id)
       return res.redirect(process.env.ETU_BASEURL + user.image)
     } catch (err) {
-      errorHandler(err, res)
+      errorHandler(err, req, res)
     }
   })
 }

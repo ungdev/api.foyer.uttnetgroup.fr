@@ -26,7 +26,7 @@ module.exports = app => {
         .json(result.data.data)
         .end()
     } catch (err) {
-      errorHandler(err, res)
+      errorHandler(err, req, res)
     }
   })
 }

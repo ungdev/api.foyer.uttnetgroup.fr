@@ -16,7 +16,7 @@ module.exports = app => {
       console.log('LINK', link)
       return res.redirect(link)
     } catch (err) {
-      errorHandler(err, res)
+      errorHandler(err, req, res)
     }
   })
 }

@@ -28,7 +28,7 @@ module.exports = app => {
         .json(tweet)
         .end()
     } catch (err) {
-      errorHandler(err, res)
+      errorHandler(err, req, res)
     }
   })
 }

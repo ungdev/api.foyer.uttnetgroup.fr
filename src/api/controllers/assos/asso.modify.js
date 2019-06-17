@@ -52,7 +52,7 @@ module.exports = app => {
         .json(orga)
         .end()
     } catch (err) {
-      errorHandler(err, res)
+      errorHandler(err, req, res)
     }
   })
 }

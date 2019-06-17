@@ -15,7 +15,7 @@ module.exports = app => {
         .json(perms)
         .end()
     } catch (err) {
-      errorHandler(err, res)
+      errorHandler(err, req, res)
     }
   })
 }

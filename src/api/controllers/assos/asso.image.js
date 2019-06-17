@@ -10,7 +10,7 @@ module.exports = app => {
           process.env.ETU_BASEURL + '/uploads/logos/' + orga.login + '.png'
         )
     } catch (err) {
-      errorHandler(err, res)
+      errorHandler(err, req, res)
     }
   })
 }

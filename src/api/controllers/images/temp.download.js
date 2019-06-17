@@ -12,7 +12,7 @@ module.exports = app => {
       let file = files.find(f => f.indexOf(req.params.name) !== -1)
       res.sendFile(path.join(__dirname, '../../../../temp', file))
     } catch (err) {
-      errorHandler(err, res)
+      errorHandler(err, req, res)
     }
   })
 }

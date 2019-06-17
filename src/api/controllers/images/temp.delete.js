@@ -36,7 +36,7 @@ module.exports = app => {
         .json({ error: 'NOT_FOUND' })
         .end()
     } catch (err) {
-      errorHandler(err, res)
+      errorHandler(err, req, res)
     }
   })
 }

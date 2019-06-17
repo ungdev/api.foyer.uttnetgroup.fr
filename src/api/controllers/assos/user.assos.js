@@ -54,7 +54,7 @@ module.exports = app => {
         .json(assos)
         .end()
     } catch (err) {
-      errorHandler(err, res)
+      errorHandler(err, req, res)
     }
   })
 }

@@ -79,7 +79,7 @@ module.exports = app => {
         .json(allasso)
         .end()
     } catch (err) {
-      errorHandler(err, res)
+      errorHandler(err, req, res)
     }
   })
 }

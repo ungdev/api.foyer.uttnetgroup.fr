@@ -25,6 +25,12 @@ module.exports = app => {
     try {
       const { Orga, Affichage } = app.locals.models
       let orga = await Orga.findByPk(req.params.id)
+      if (!req.body.image && !req.body.text && !req.body.title) {
+        return res
+          .status(400)
+          .json({ error: 'MISSING_PARAMS' })
+          .end()
+      }
       let affichage = await Affichage.create({
         title: req.body.title,
         text: req.body.text

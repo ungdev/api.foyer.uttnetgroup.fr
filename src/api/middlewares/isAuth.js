@@ -9,7 +9,7 @@ module.exports = route => async (req, res, next) => {
   const { User, Permission } = req.app.locals.models
 
   const date = req.get('X-Date')
-  const enabled = true // put at false when you want to use postman for example
+  const enabled = false // put at false when you want to use postman for example
   if (enabled && date && moment().format('x') - moment(date).format('x') > 10000)
     return res
       .status(401)

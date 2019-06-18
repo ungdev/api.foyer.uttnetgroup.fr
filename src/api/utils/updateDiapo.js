@@ -37,8 +37,7 @@ module.exports = async app => {
       const diapos = perm.orgas
         .filter(orga => orga.diapoImage)
         .map(orga => orga.diapoImage)
-      const affiches = [] //TODO GET ORGA AFFICHES
-      io.emit('diapoImages', [...diapos, ...affiches])
+      io.emit('diapoImages', diapos)
     } else {
       const images = await getDefaultDiapo(app)
       io.emit('diapoImages', images)

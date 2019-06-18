@@ -4,7 +4,7 @@ module.exports = async app => {
   const { io } = app.locals
   try {
     const result = await axios.get(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=48.270&lon=4.065&units=metric&appid=${process.env.OPEN_WEATHER_APP_ID}`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=48.270&lon=4.065&units=metric&mode=json&appid=${process.env.OPEN_WEATHER_APP_ID}`
     )
     let { list } = result.data
     list = list.filter(

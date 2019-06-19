@@ -34,9 +34,10 @@ module.exports = async app => {
       )
       io.emit('diapoImages', images)
     } else if (perm.orgas.length > 0) {
-      const diapos = perm.orgas
+      let diapos = perm.orgas
         .filter(orga => orga.diapoImage)
         .map(orga => orga.diapoImage)
+      if (diapos.length === 0) diapos = await getDefaultDiapo(app)
       io.emit('diapoImages', diapos)
     } else {
       const images = await getDefaultDiapo(app)

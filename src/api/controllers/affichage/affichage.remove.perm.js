@@ -1,6 +1,7 @@
 const errorHandler = require('../../utils/errorHandler')
 const isAuth = require('../../middlewares/isAuth')
-const isAdmin = require('../../middlewares/isAdmin')
+const updateDiapo = require('../../utils/updateDiapo')
+const updateLogos = require('../../utils/updateLogos')
 
 module.exports = app => {
   app.delete('/perms/:id/affichages/:affichageId', [
@@ -18,6 +19,8 @@ module.exports = app => {
           .json({ error: 'NOT_FOUND' })
           .end()
       affichage.removePerms(perm)
+      updateDiapo(app)
+      updateLogos(app)
       return res
         .status(200)
         .json('OK')
